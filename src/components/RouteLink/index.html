@@ -1,0 +1,32 @@
+<a href="{path}" on:click="navigate(event)">{text}</a>
+
+<script>
+  import history from '../../history';
+  import { routes } from '../../routes';
+
+  export default {
+    data() {
+      return {
+        options: {}
+      };
+    },
+    onstate({changed, current, previous}) {
+      if (changed.to) {
+        const route = routes.find((r) => {
+          return r.name === current.to;
+        });
+        const path = route.matcher.reverse(
+          current.options
+        );
+        this.set({path, route});
+      }
+    },
+    methods: {
+      navigate(ev) {
+        ev.preventDefault();
+        const { path } = this.get();
+        history.push(path);
+      }
+    }
+  };
+</script>

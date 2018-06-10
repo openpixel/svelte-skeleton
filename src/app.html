@@ -1,0 +1,27 @@
+<div>
+  <RouteLink to="home" text="Home" />
+  <RouteLink to="about" text="About" />
+  <svelte:component this={component} />
+</div>
+
+<script>
+  import history from './history';
+  import { match } from './routes';
+  import RouteLink from './components/RouteLink/index.html';
+
+	export default {
+	  data() {
+	    return {
+	      location: history.location
+      };
+    },
+    computed: {
+	    component: ({location}) => {
+        return match(location, null)
+      }
+    },
+    components: {
+      RouteLink
+    }
+  };
+</script>
